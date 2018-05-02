@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>signup</title>
+
+
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+
+</head>
+
+<body>
+
+<div class="login">
+	<h1>Login</h1>
+    <br/>
+	<form role="form" method="POST" th:action="@{/fsignup}" th:object="${Account}">
+		<input type="text" name="account" placeholder="name" required="required" th:field="*{name}" />
+		<input type="password" name="password" placeholder="password" required="required" th:field="*{password}"/>
+		<button type="submit" class="btn btn-primary btn-block btn-large">注册</button>
+	</form>
+</div>
+
+<div style="text-align:center;">
+
+</div>
+
+</body>
+    <footer>
+        <div class="widewrapper copyright">
+            <i class=" fa fa-copyright" style="font-size: 14px"> </i> <span style="font-size: small">Copyright 2018 - </span>  <a href="http://www.xiguashu.top"style="font-size: small" >西瓜树</a>
+        </div>
+    </footer>
+</html>

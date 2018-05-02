@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>西瓜树</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+</head>
+<body>
+<!-- contact-form -->	
+<div class="message warning">
+<div class="inset">
+	<div class="login-head">
+		<h1>Login</h1>
+	</div>
+		<form form role="form" method="POST" th:action="@{/index}" th:object="${Account}">
+			<li>
+				<input type="text" name="account" placeholder="name" required="required" th:field="*{name}" /><a href="#" class=" icon user"></a>
+			</li>
+				<div class="clear"> </div>
+			<li>
+				<input type="password" name="password" placeholder="password" required="required" th:field="*{password}"/> <a href="#" class="icon lock"></a>
+			</li>
+
+			<div class="clear"> </div>
+			<div class="submit">
+			<button type="submit" class="btn btn-primary " style="background-color: #6D4A70" >登录</button>
+						  <div class="clear">  </div>
+			</div>
+
+	</form>
+		</div>					
+	</div>
+	</div>
+	<div class="clear"> </div>
+
+<button type="button" value="submit" onclick="test()">test</button>
+<button type="button" th:onclick="'javascript:test()'">test</button>
+<p id="demo"> test </p>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script >
+function test() {
+    // var xml = XMLHttpRequest(); xml.open('POST', '/test/', true); xml.setRequestHeader("Content-type","application/x-www-form-urlencoded"); xml.send('username=abc&password=123');
+    //$.post('test', {'name':222});
+     $.ajax({
+
+		 type: 'POST',
+		 url: "verify2",
+		 data: {"name":"1","password":"1"},
+
+		 success: function (data) {
+			//document.write(data)
+
+		 }
+	 })
+}
+
+</script>
+</body>
+</html>
