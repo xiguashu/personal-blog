@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:a="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <title>Search Result</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+<link rel="icon" type="image/x-icon" href="/img/favicon3.ico">
+    <!-- Bootstrap styles -->
+   <link rel="stylesheet" href="css/style.css">
+
+
+
+    <!--[if lt IE 9]>
+        <script src="js/vendor/google/html5-3.6-respond-1.1.0.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Custom icon font-->
+    <link rel="stylesheet" href="css/css/fontastic.css">
+    <!-- Google fonts - Open Sans-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <!-- Fancybox-->
+    <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/css/custom.css">
+
+
+<style type="text/css">
+    .over {border-style: groove ;border-width: 1px}
+    .out {border-bottom-width: 0px;border-right-width: 0px}
+
+    .overblack {color: #000000}
+    .outgray{color: #adadad}
+    .outblue{color: #5bc0de}
+    .overblue{color: #00ff00;}
+    a:link{color: #269abc;}
+    a:hover{color: black;}
+    </style>
+</head>
+<body>
+
+
+
+
+    <header class="header">
+      <!-- Main Navbar-->
+      <nav class="navbar navbar-expand-lg">
+        <div class="search-area">
+          <div class="search-area-inner d-flex align-items-center justify-content-center">
+            <div class="close-btn"><i class="fa fa-close"></i></div>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-8">
+                <form action="/search">
+                  <div class="form-group">
+                    <input type="search" required="required" name="search" id="search" placeholder="What are you looking for?">
+                    <button type="submit" class="submit"><i class="fa fa-search"></i></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <!-- Navbar Brand -->
+          <div class="navbar-header d-flex align-items-center justify-content-between">
+              <!-- Navbar Brand --><a href="/" class="navbar-brand"><img src="img/logo2.jpg"></a>
+            <!-- Toggle Button-->
+            <button type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarcollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span></span><span></span><span></span></button>
+          </div>
+          <!-- Navbar Menu -->
+          <div id="navbarcollapse" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a href="/" class="nav-link active ">Home</a>
+              </li>
+              <li class="nav-item"><a href="/" class="nav-link ">About</a>
+              </li>
+              <li class="nav-item"><a href="/" class="nav-link ">Contact</a>
+              </li>
+            </ul>
+            <div class="navbar-text"><a href="#" class="search-btn"><i class="fa fa-search"></i></a></div>
+              <ul class="langs navbar-text"> <a href="http://github.com/xiguashu"><i class="fa fa-github" style="font-size: large"></i></a></ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-9">
+            <p>" <span th:text="${keywords}"></span> " 的搜索结果：（关键字可能出现在文章内容）</p>
+          <div class="container">
+            <div class="row">
+                <th:block th:each="article : ${Articles}">
+              <!-- post -->
+              <div class="post col-xl-10">
+
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date meta-last" th:text="${article.getCdate()}"></div>
+                    <div class="category"><a th:text="${article.getCatalog()}" th:href="@{/catalog(id=${article.getCatalog()})}"></a></div>
+                  </div>
+                  <a th:href="@{/Article(articleId=${article.getId()})}" >
+                    <h3 class="h4" th:text="${article.getTitle()}"></h3></a>
+                  <p class="text-muted" th:text="${article.getIntro()}"></p>
+                    <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap"></a>
+                                       <i class="fa fa-comment-o" style="font-size: 13px; text-align: right"> <a style="font-size: 13px;" th:text="${ArticleComments['__${article.getId()}__'].size()}" th:href="@{/Article(articleId=${article.getId()})}"></a></i>
+                                     </footer>
+                </div>
+
+              </div>
+</th:block>
+
+            </div>
+
+
+          </div>
+        </main>
+        <aside class="col-lg-3">
+          <!-- Widget [Search Bar Widget]-->
+          <div class="widget search">
+            <header>
+              <h3 class="h6">Search the blog</h3>
+            </header>
+            <form action="/search" class="search-form">
+              <div class="form-group">
+                <input type="search" name="search" required="required" placeholder="What are you looking for?">
+                <button type="submit" class="submit"><i class="fa fa-search"></i></button>
+              </div>
+            </form>
+          </div>
+          <!-- Widget [Latest Posts Widget]        -->
+          <div class="widget latest-posts">
+            <header>
+              <h3 class="h6">Latest Posts</h3>
+            </header>
+
+            <div class="blog-posts" style="font-size: small">
+                <th:block th:each="post:${recentposts}">
+                <a th:href="@{/Article(articleId=${post.getId()})}">
+                <div class="item d-flex align-items-center">
+                  <div class="title" th:text="${post.getTitle()}"><strong></strong>
+                  </div>
+                </div></a>
+                    </th:block>
+                </div>
+          </div>
+          <!-- Widget [Categories Widget]-->
+
+          <div class="widget categories" style="font-size: 14px">
+            <header>
+              <h3 class="h6">Categories</h3>
+            </header>
+               <th:block th:each="catalog:${catalogs}">
+            <div class="item d-flex justify-content-between"><a th:href="@{/catalog(id=${catalog})}" th:text="${catalog}" >Growth</a></div>
+            </th:block>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+    <!-- Page Footer-->
+    <footer>
+        <div class="widewrapper copyright">
+            <i class=" fa fa-copyright" style="font-size: 14px"> </i> <span style="font-size: small">Copyright 2018 - </span>  <a href="http://www.xiguashu.top"style="font-size: small" >西瓜树</a>
+        </div>
+    </footer>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+    <script src="js/front.js"></script>
+  </body>
+</html>
