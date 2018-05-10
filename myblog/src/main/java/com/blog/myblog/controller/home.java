@@ -91,4 +91,8 @@ public class home {
         model.addAttribute("Articles",Articles);
         return "catalog";
     }
+
+
+
+
 }

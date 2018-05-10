@@ -65,7 +65,7 @@
                 <h1>Editor</h1>
             </header>
     <div class="com-rol-9">
-            <form role="form" th:action="@{/addArticle}" th:object="${Article}" method="post" accept-charset="utf-8">
+            <form role="form" th:action="@{/admin/addArticle}" th:object="${Article}" method="post" accept-charset="utf-8">
                 <input type="text" name="title" id="title" placeholder="title" class="form-control input-lg" th:field="*{title}" required="required">
                 <input type="text" name="catalog" id="catalog" placeholder="catalog" class="form-control input-lg" th:field="*{catalog}">
                 <textarea rows="3" class="form-control input-lg"  name="intro" id="intro" placeholder="introduction" th:field="*{intro}"></textarea>

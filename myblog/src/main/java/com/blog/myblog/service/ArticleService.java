@@ -68,4 +68,8 @@ public class ArticleService {
         article.setCdate();
         artRepo.save(article);
     }
+    public List<Article> search(String keywords)
+    {
+        return artRepo.findByTitleContainingOrIntroContainingOrContentContaining("%"+keywords+"%","%"+keywords+"%","%"+keywords+"%");
+    }
 }

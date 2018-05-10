@@ -38,13 +38,18 @@ public class adminController {
     @RequestMapping("/login")
     String adminpage(Model model)
     {
-
-        model.addAttribute("Account",new Account());
         return "admin/login";
     }
 
-    @RequestMapping("/index")
-    String verify(Model model)
+        @RequestMapping("/forbidden")
+    String forbidden(Model model)
+    {
+
+        return "admin/403";
+    }
+
+    @RequestMapping("/admin/index")
+    String index(Model model)
     {
 
             model.addAttribute("articles",ArtSer.findAll());
@@ -52,7 +57,7 @@ public class adminController {
 
     }
 
-    @RequestMapping("adminedit")
+    @RequestMapping("/admin/adminedit")
     public String adminedit(@Param("id") Long id,Model model)
     {
         Article article= ArtSer.findbyId(id);
@@ -61,7 +66,7 @@ public class adminController {
         return "admin/adminedit";
     }
 
-    @RequestMapping("/editArticle")
+    @RequestMapping("/admin/editArticle")
     public String editArticle(@Param("id") Long id,  Article article,Model model)
     {
 
@@ -72,26 +77,9 @@ public class adminController {
         return "redirect:/Article?articleId="+article.getId();
     }
 
-    @RequestMapping("/verify")
-    @ResponseBody
-    public String VerifyAc(@Param("name") String name,@Param("password") String password)
-    {
-        Account account=new Account(name,password);
-        if (loginser.verifyUser(account))
-            return "T";
-        return "F";
-    }
 
-    @RequestMapping("/verify2")
-    public String VerifyAc2(@Param("name") String name,@Param("password") String password)
-    {
-        Account account=new Account(name,password);
-        if (loginser.verifyUser(account))
-            return "index";
-        return "index";
-    }
 
-        @RequestMapping("/newArticle")
+    @RequestMapping("/admin/newArticle")
     String edit(Model model)
     {
         model.addAttribute("Article",new Article());
@@ -99,10 +87,16 @@ public class adminController {
         return "admin/editor";
     }
 
-    @RequestMapping("/addArticle")
+    @RequestMapping("/admin/addArticle")
     String addArticle(Model model,Article article)
     {
         ArtSer.Save(article);
         return "redirect:/Article?articleId="+article.getId();
+    }
+
+    @RequestMapping("/images")
+    void uploadimg()
+    {
+//1111
     }
 }

@@ -30,11 +30,11 @@
 <br>
 <br>
     <div style="text-align: center">
-        <a href="newArticle"> new article </a>
+        <a href="/admin/newArticle"> new article </a>
 
         <ul style="text-align: center">
             <th:block th:each="article:${articles}">
-             <li><a th:href="@{/adminedit(id=${article.getId()})}" th:text="${article.getTitle()}" ></a></li>
+             <li><a th:href="@{/admin/adminedit(id=${article.getId()})}" th:text="${article.getTitle()}" ></a></li>
             </th:block>
 
         </ul>

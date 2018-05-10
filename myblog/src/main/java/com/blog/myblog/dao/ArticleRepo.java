@@ -45,5 +45,8 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Article art set art.intro=Intro where art.id=id")
     public void updateIntro(Long id,String Intro);
+
+
+    public List<Article> findByTitleContainingOrIntroContainingOrContentContaining(String keywords1,String keywords2,String keywords3);
 }
 

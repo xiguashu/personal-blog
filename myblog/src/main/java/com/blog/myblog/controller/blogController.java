@@ -7,15 +7,19 @@ import com.blog.myblog.domain.Comments;
 import com.blog.myblog.service.ArticleService;
 import com.blog.myblog.service.CommentsService;
 import com.blog.myblog.service.loginservice;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @EnableAutoConfiguration
@@ -53,5 +57,29 @@ public class blogController {
         return "redirect:/Article?articleId="+articleId;
     }
 
+    @RequestMapping("/search")
+    public String search(Model model,@RequestParam("search") String keywords)
+    {
+        List<Article> results=ArtSer.search(keywords);
+        model.addAttribute("Articles",results);
+        model.addAttribute("keywords",keywords);
+
+        List<Article> Articles=ArtSer.findAll();
+        List<String> catalogs=ArtSer.catalogs();
+        int indexofrecent=Articles.size()>7?7:Articles.size();
+        Map<String,List<Comments>> ArticleComments=new HashMap<>();
+
+        for(int i=0;i<Articles.size();i++) {
+            List<Comments> commentsList = cs.findByArticleid(Articles.get(i).getId());
+            ArticleComments.put(Articles.get(i).getId().toString(),commentsList);
+        }
+
+        model.addAttribute("ArticleComments",ArticleComments);
+        model.addAttribute("recentposts", Articles.subList(Articles.size()-indexofrecent,Articles.size()));
+        model.addAttribute("catalogs",catalogs);
+
+
+        return "search";
+    }
 
 }
