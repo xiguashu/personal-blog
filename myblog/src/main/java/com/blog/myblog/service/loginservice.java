@@ -32,6 +32,6 @@ public class loginservice {
 
             return "用户名 " + user.getName() + "已被占用！";
         }
-
+//
     }
 }
