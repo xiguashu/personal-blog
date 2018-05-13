@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()   //任何人都可以访问
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .antMatchers("/").permitAll()
                 .and()
                  .formLogin().loginPage("/login").usernameParameter("username")
@@ -33,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-            .withUser("root")
-            .password("root")
-            .authorities("ROLE_ADMIN");
+            .withUser("admin")
+            .password("admin")
+            .authorities("ADMIN");
 
 
     }
