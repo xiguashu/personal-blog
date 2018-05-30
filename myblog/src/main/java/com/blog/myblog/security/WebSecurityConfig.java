@@ -7,7 +7,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
@@ -19,31 +23,47 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()   //任何人都可以访问
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/music_manage").access("hasRole('ROLE_chuci')")
                 .antMatchers("/").permitAll()
                 .and()
                  .formLogin().loginPage("/login").usernameParameter("username")
                     .passwordParameter("password").and()
                  .httpBasic();
-
-
-
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-            .withUser("root")
-            .password("root")
+            .withUser("x")
+            .password("x")
             .authorities("ROLE_ADMIN");
+
+        auth
+                .inMemoryAuthentication()
+                .withUser("xx")
+                .password("xx")
+                .authorities("ROLE_chuci");
 
 
     }
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-    }
+    }}
+    /*
+@Bean
+@Override
+public UserDetailsService userDetailsService() {
+    UserDetails user =
+            User.withDefaultPasswordEncoder()
+                    .username("root")
+                    .password("root")
+                    .roles("ADMIN")
+                    .build();
 
-
-
+    return new InMemoryUserDetailsManager(user);
 }
+
+
+}*/

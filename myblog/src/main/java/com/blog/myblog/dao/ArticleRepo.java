@@ -18,13 +18,16 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
 
     public List<Article> findByTitle(String Title);
 
+    @Query("from Article a where a.catalog != 'about'")
+    public List<Article> findAllExcept();
+
     @Query("from Article a where a.catalog=:catalog")
     public List<Article> findAccountBycatalog(@Param("catalog") String catalog);
 
     @Query("from Article a where a.id=:id")
     public Optional<Article> findById(@Param("id") Long id );
 
-    @Query("select distinct catalog from Article ")
+    @Query("select distinct catalog from Article where catalog != 'about'")
     public List<String> findAllCatalog();
 
     @Transactional
@@ -47,6 +50,6 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
     public void updateIntro(Long id,String Intro);
 
 
-    public List<Article> findByTitleContainingOrIntroContainingOrContentContaining(String keywords1,String keywords2,String keywords3);
+    public List<Article> findByTitleContainingOrIntroContainingOrContentContainingAndCatalogNotLike(String keywords1,String keywords2,String keywords3,String About);
 }
 

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <title>楚辞</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/x-icon" href="/img/favicon3.ico">
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+    <!--[if lt IE 9]>
+    <script src="js/vendor/google/html5-3.6-respond-1.1.0.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Custom icon font-->
+    <link rel="stylesheet" href="css/css/fontastic.css">
+    <!-- Google fonts - Open Sans-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <!-- Fancybox-->
+    <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/css/style.default.css" id="theme-stylesheet">
+
+
+
+
+
+
+    <style>
+
+        #skPlayer{
+            margin:27px auto 0;
+        }
+
+        .doc{
+            text-align:left;
+        }
+        pre{
+            padding-left:2em;
+            font-size:16px;
+            line-height:24px;
+            color:#fff;
+            background-color:#272822;
+            border-radius:3px;
+        }
+        @media screen and (max-width:768px){
+            body{
+                width:100%;
+            }
+            .doc{
+                display:none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <!-- Main Navbar-->
+    <nav class="navbar navbar-expand-lg">
+        <div class="search-area">
+            <div class="search-area-inner d-flex align-items-center justify-content-center">
+                <div class="close-btn"><i class="fa fa-close"></i></div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8">
+                        <form action="/search">
+                            <div class="form-group">
+                                <input type="search" required="required" name="search" id="search" placeholder="What are you looking for?">
+                                <button type="submit" class="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <!-- Navbar Brand -->
+            <div class="navbar-header d-flex align-items-center justify-content-between">
+                <!-- Navbar Brand --><a href="/music" class="navbar-brand"><img src="img/chuci.png"></a>
+                <!-- Toggle Button-->
+                <button type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarcollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span></span><span></span><span></span></button>
+            </div>
+            <!-- Navbar Menu -->
+            <div id="navbarcollapse" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="/music" class="nav-link ">Home</a>
+                    </li>
+                    <li class="nav-item"><a href="/music_manage" class="nav-link active">Add & Delete</a>
+                    </li>
+                </ul>
+                </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+
+
+
+<ul class="list-group">
+    <div class="list-group-item active">
+        <h5 class="list-group-item-heading" >
+            楚辞喜欢的音乐
+        </h5>
+    </div>
+    <th:block th:each="song,iter:${songs}">
+        <a th:href="@{/_music(index=${iter.index})}" ><li class="list-group-item" ><span th:text="${song.getTitle()}+' - '+${song.getSinger()}"></span><a role="button" class="btn btn-info pull-right btn-sm" th:href="@{/delete_music(id=${song.getId()})}">删除</a></li></a>
+    </th:block>
+</ul>
+
+            </main>
+
+        <aside class="col-lg-4">
+
+            <form th:action="@{/addmusic}" th:object="${song}" method="post">
+                <div class="list-group-item active">
+                    <h5 class="list-group-item-heading">
+                        楚辞即将喜欢的音乐
+                    </h5>
+                </div>
+                <br>
+                <select  class="form-control" name="source" id="source" th:field="*{source}">
+                    <option value="1">网易云音乐</option>
+                    <option value="2">QQ音乐</option>
+                    <option value="3">虾米音乐</option>
+                    <option value="4">酷我音乐</option>
+                    <option value="5">酷狗音乐</option>
+                </select>
+                <br>
+                <input type="text" name="title" id="title" class="form-control" th:field="*{title}" placeholder="歌名"/>
+                <br>
+                <input type="text" name="singer" id="singer" class="form-control"  th:field="*{singer}" placeholder="歌手"/>
+                <br>
+                <input type="text" class="form-control" name="url" id="url" th:field="*{url}" placeholder="url" required/>
+                <a class="help-block" th:href="@{/help}" target="_blank">如何获取url</a>
+                <br><br>
+                <button type="submit" class="btn btn-default pull-center"> 添 加 </button>
+            </form>
+
+        </aside>
+    </div></div>
+
+<script src="dist/skPlayer.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*  var player = new skPlayer({
+          autoplay: true,
+          music: {
+              type: 'cloud',
+              source: 317921676
+          }
+      });
+  */
+    var s=new Array();
+    var i=0;
+
+</script>
+
+<script th:each="song:${songs}" th:inline="javascript">
+    s[i]=
+        {
+            name:[[${song.getTitle()}]],
+            author:[[${song.getSinger()}]],
+            src:[[${song.getUrl()}]],
+            cover:''
+        }
+    i++;
+
+</script>
+<script th:inline="javascript">
+
+
+    var player = new skPlayer({
+        autoplay: true,
+        //可选项,自动播放,默认为false,true/false
+        listshow: true,
+        //可选项,列表显示,默认为true,true/false
+        mode: 'listloop',
+        music: {
+            //必需项,音乐配置
+            type: 'file',
+            //必需项,自配置文件方式指定填'file'
+            source: s
+        }
+    });
+</script>
+</body>
+</html>

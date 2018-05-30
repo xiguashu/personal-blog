@@ -58,10 +58,11 @@ public class ArticleService {
         artRepo.flush();
 
     }
+    public List<Article> findAll_About(){return artRepo.findAll();}
 
     public List<Article> findAll()
     {
-        return artRepo.findAll();
+        return artRepo.findAllExcept();
     }
     public void Save(Article article)
     {
@@ -70,6 +71,6 @@ public class ArticleService {
     }
     public List<Article> search(String keywords)
     {
-        return artRepo.findByTitleContainingOrIntroContainingOrContentContaining("%"+keywords+"%","%"+keywords+"%","%"+keywords+"%");
+        return artRepo.findByTitleContainingOrIntroContainingOrContentContainingAndCatalogNotLike("%"+keywords+"%","%"+keywords+"%","%"+keywords+"%","ABOUT");
     }
 }

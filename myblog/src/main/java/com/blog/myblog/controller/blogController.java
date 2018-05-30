@@ -61,6 +61,9 @@ public class blogController {
     public String search(Model model,@RequestParam("search") String keywords)
     {
         List<Article> results=ArtSer.search(keywords);
+        for(Article a:results)
+        System.out.println(a.getTitle());
+
         model.addAttribute("Articles",results);
         model.addAttribute("keywords",keywords);
 

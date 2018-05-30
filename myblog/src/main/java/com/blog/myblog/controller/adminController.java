@@ -52,7 +52,7 @@ public class adminController {
     String index(Model model)
     {
 
-            model.addAttribute("articles",ArtSer.findAll());
+            model.addAttribute("articles",ArtSer.findAll_About());
             return "admin/adminpage";
 
     }

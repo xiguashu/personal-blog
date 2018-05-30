@@ -55,9 +55,13 @@ public class home {
     public String ToAbout(Model model)
     {
         List<Article> Articles=ArtSer.findAll();
-        int indexofrecent=Articles.size()>5?5:Articles.size();
+        List<String> catalogs=ArtSer.catalogs();
+        int indexofrecent=Articles.size()>7?7:Articles.size();
 
+        Article about= ArtSer.findbyTitle("ABOUT").get(0);
+        model.addAttribute("article",about);
         model.addAttribute("recentposts", Articles.subList(Articles.size()-indexofrecent,Articles.size()));
+        model.addAttribute("catalogs",catalogs);
         return "about";
     }
     @RequestMapping("/contact")

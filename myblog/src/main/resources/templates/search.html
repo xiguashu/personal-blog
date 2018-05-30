@@ -98,6 +98,10 @@
             <p>" <span th:text="${keywords}"></span> " 的搜索结果：（关键字可能出现在文章内容）</p>
           <div class="container">
             <div class="row">
+
+
+                <!--/*@thymesVar id="Articles" type="List<com.blog.myblog.domain.Article>"*/-->
+                <p th:if="${Articles.size()} == 0" style="text-align: center">无结果</p>
                 <th:block th:each="article : ${Articles}">
               <!-- post -->
               <div class="post col-xl-10">
